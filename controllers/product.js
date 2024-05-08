@@ -76,23 +76,22 @@ exports.update = async (req, res) => {
     });
 };
 
-// Delete a user with the specified id in the request
+// Delete a product with the specified id in the request
 exports.destroy = async (req, res) => {
-  await ProductModel.findByIdAndRemove(req.params.id)
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `product not found.`,
-        });
-      } else {
-        res.send({
-          message: "product deleted successfully!",
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message,
+  try {
+    const data = await ProductModel.findByIdAndDelete(req.params.id);
+    if (!data) {
+      res.status(404).send({
+        message: `Product not found.`,
       });
+    } else {
+      res.send({
+        message: "Product deleted successfully!",
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
     });
+  }
 };
