@@ -19,12 +19,15 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => {
-    console.log("Databse Connected Successfully!!");
+    console.log("Database Connected Successfully!!");
   })
   .catch((err) => {
     console.log("Could not connect to the database", err);
     process.exit();
   });
+
+const ProductRoute = require("./routes/product");
+app.use("/product", ProductRoute);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from crup api" });
